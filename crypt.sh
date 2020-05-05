@@ -33,7 +33,7 @@ do
 done
 
 eltolas=$(($kulcsosszeg/$kulcshossz))
-echo "$kulcsosszeg / $kulcshossz"
+#echo "$kulcsosszeg / $kulcshossz"
 echo "Eltolas: $eltolas"
 
 
@@ -42,8 +42,8 @@ until [ $(($eltolas)) -lt $((${#abc})) ]
 do
 	eltolas=$(($eltolas-(${#abc})))
 done
-echo "${#abc}"
-echo "$eltolas"
+#echo "${#abc}"
+#echo "$eltolas"
 
 #Eltolt abc
 
@@ -55,8 +55,10 @@ echo "$abc"
 echo "$outputabc"
 
 
-crypt()
-{
+if [ "$3" = "c" ]
+then
+
+echo "\nKodolunk"
 outputtartalom=""
 outputbetu=""
 
@@ -71,13 +73,13 @@ do
 			a=`expr substr $abc $f 1` #tabla
 			if [ "$k" = "" ];
 			then
-				echo "Helo mama"
+				#echo "Helo mama"
 				outputtartalom="${outputtartalom} "
 				break
 			fi
 			if [ "$k" = "$a" ];
 			then
-				echo "$k = $a"
+				#echo "$k = $a"
 				outputbetu=`expr substr $outputabc $f 1`
 				outputtartalom="${outputtartalom}${outputbetu}"
 				break
@@ -87,10 +89,43 @@ do
 
 done
 
+echo "$outputtartalom"
 echo "$outputtartalom" > $1
 
-}
+else
 
-decrypt(){
+echo "\nDekodolunk"
+outputtartalom=""
+outputbetu=""
 
-}
+for i in $fajltartalom #Szavakat darabol
+do
+	for j in $(seq 0 ${#i}) #Szavak betuin megy vegig
+	do
+
+		for f in $(seq 0 ${#abc})
+		do
+			k=`expr substr $i $j 1` #szoveg
+			a=`expr substr $outputabc $f 1` #tabla
+			if [ "$k" = "" ];
+			then
+				#echo "Helo mama"
+				outputtartalom="${outputtartalom} "
+				break
+			fi
+			if [ "$k" = "$a" ];
+			then
+				#echo "$k = $a"
+				outputbetu=`expr substr $abc $f 1`
+				outputtartalom="${outputtartalom}${outputbetu}"
+				break
+			fi
+		done
+	done
+
+done
+
+echo "$outputtartalom" > $1
+echo "$outputtartalom"
+
+fi

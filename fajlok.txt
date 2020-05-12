@@ -1,5 +1,0 @@
-total 20
-drwxrwxr-x 2 O6U1ZU O6U1ZU  4096 Apr  7 11:58 .
-drwxr-xr-x 6 O6U1ZU O6U1ZU  4096 Apr  7 11:58 ..
--rw-rw-r-- 1 O6U1ZU O6U1ZU     0 Apr  7 11:58 fajlok.txt
--rw-rw-r-- 1 O6U1ZU O6U1ZU 10470 Apr  7 11:58 szoveg.txt

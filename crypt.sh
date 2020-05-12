@@ -4,8 +4,33 @@
 # arg 2  = titkosítási kulcs
 # arg 3  = crypt vagy decrypt c/d
 
-fajltartalom=`cat $1`
-kulcs="$2"
+fajltartalom=""
+kulcs=""
+fajlnev=""
+c="false"
+d="false"
+valasztott="false"
+
+while getopts "cdf:k:" option; do
+	case $option in
+		c)
+			c="true"
+			valasztott="true";;
+		d)
+			d="true"
+			valasztott="true";;
+		f)
+			fajltartalom=`cat ${OPTARG}`
+			fajlnev="${OPTARG}";;
+		k)
+			kulcs="${OPTARG}";;
+
+	esac
+done
+
+if [ "$fajlnev" != "" ] && [ "$kulcs" != "" ] && [ "$valasztott" = 'true' ]
+then
+
 echo "A titkositas elotti fajl tartalma:\n"
 echo "$fajltartalom\n"
 echo "Titkositasi kulcs: $kulcs"
@@ -55,7 +80,7 @@ echo "$abc"
 echo "$outputabc"
 
 
-if [ "$3" = "c" ]
+if [ "$c" = "true" ]
 then
 
 echo "\nKodolunk"
@@ -76,23 +101,26 @@ do
 				#echo "Helo mama"
 				outputtartalom="${outputtartalom} "
 				break
-			fi
+			fi;
 			if [ "$k" = "$a" ];
 			then
 				#echo "$k = $a"
 				outputbetu=`expr substr $outputabc $f 1`
 				outputtartalom="${outputtartalom}${outputbetu}"
 				break
-			fi
+			fi;
 		done
 	done
 
 done
 
 echo "$outputtartalom"
-echo "$outputtartalom" > $1
+echo "$outputtartalom" > $fajlnev
 
-else
+fi;
+
+if [ "$d" = "true" ]
+then
 
 echo "\nDekodolunk"
 outputtartalom=""
@@ -112,20 +140,24 @@ do
 				#echo "Helo mama"
 				outputtartalom="${outputtartalom} "
 				break
-			fi
+			fi;
 			if [ "$k" = "$a" ];
 			then
 				#echo "$k = $a"
 				outputbetu=`expr substr $abc $f 1`
 				outputtartalom="${outputtartalom}${outputbetu}"
 				break
-			fi
+			fi;
 		done
 	done
 
 done
 
-echo "$outputtartalom" > $1
+echo "$outputtartalom" > $fajlnev
 echo "$outputtartalom"
 
-fi
+fi;
+
+else
+echo "Kérlek adj meg minden szükséges kapcsolót! -f fájl -k kulcs -c/d"
+fi;
